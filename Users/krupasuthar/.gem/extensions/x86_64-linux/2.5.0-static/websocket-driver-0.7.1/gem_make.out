@@ -1,0 +1,15 @@
+current directory: /home/krupasuthar/react-rails-demo/Users/krupasuthar/.gem/gems/websocket-driver-0.7.1/ext/websocket-driver
+/home/krupasuthar/.rbenv/versions/2.5.1/bin/ruby -r ./siteconf20190621-10735-1c17kl6.rb extconf.rb
+creating Makefile
+
+current directory: /home/krupasuthar/react-rails-demo/Users/krupasuthar/.gem/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /home/krupasuthar/react-rails-demo/Users/krupasuthar/.gem/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.so
+
+current directory: /home/krupasuthar/react-rails-demo/Users/krupasuthar/.gem/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 websocket_mask.so ./.gem.20190621-10735-n7tf4
