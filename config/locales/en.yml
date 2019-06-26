@@ -33,9 +33,17 @@ en:
   hello: "Hello world"
   success: "Success"
 
+  
   projects:
     list: "Project list found"
     created: "Project created successfully"
     found: "Project found"
-    updated: "Projet updated successfully" 
+    updated: "Project updated successfully" 
     deleted: "Project deleted successfully"
+
+  todos:
+    list: "Todo list found"
+    created: "Todo created successfully"
+    found: "Todo found"
+    updated: "Todo updated successfully" 
+    deleted: "Todo deleted successfully"

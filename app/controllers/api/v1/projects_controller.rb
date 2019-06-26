@@ -23,6 +23,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def destroy
+    @project.destroy!
     success(message: I18n.t("projects.deleted"))
   end
 

@@ -5,30 +5,30 @@ import { FaTrash, FaPencilAlt } from "react-icons/fa/";
 import API from './api'
 
 
-class AllProjects extends React.Component {
+class AllTodos extends React.Component {
     constructor(props){
         super(props);
-        this.state = { projects: [], loading: false, error: null };
-        this.refreshProjects = this.refreshProjects.bind(this);
-        this.deleteProject = this.deleteProject.bind(this);
+        this.state = { todos: [], loading: false, error: null };
+        this.refreshTodos = this.refreshTodos.bind(this);
+        this.deleteTodo = this.deleteTodo.bind(this);
     }
 
     componentDidMount(){
-        this.refreshProjects();
+        this.refreshTodos();
     }
 
-    refreshProjects(){
+    refreshTodos(){
         console.log("In refresh project");
         this.setState({loading: true});
-        API.get('api/v1/projects')
-            .then((response) => { this.setState({loading: false, projects: response.data.data}) })
+        API.get('api/v1/todos')
+            .then((response) => { this.setState({loading: false, todos: response.data.data}) })
             .catch(error => { this.setState({loading: false, error: error}) } )
     }
 
-    deleteProject(id){
+    deleteTodo(id){
         console.log("In delete project");
-        API.delete(`api/v1/projects/${id}`)
-            .then(() => { this.refreshProjects() })
+        API.delete(`api/v1/todos/${id}`)
+            .then(() => { this.refreshTodos() })
     }
 
     render(){
@@ -39,16 +39,16 @@ class AllProjects extends React.Component {
         if(this.state.loading){
             return <p>loading...</p>;
         }
-        var projects = this.state.projects.map((project) => {
-            return(<tr key={project.id}>
-                <td>{project.name}</td>
-                <td>{project.description}</td>
-                <td>{project.start_date}</td>
-                <td>{project.created_at}</td>
+        var todos = this.state.todos.map((todo) => {
+            return(<tr key={todo.id}>
+                <td>{todo.name}</td>
+                <td>{todo.description}</td>
+                <td>{todo.project.name}</td>
+                <td>{todo.created_at}</td>
                 <td>
                     <ButtonToolbar>
                         <Button variant="info"><FaPencilAlt /></Button>
-                        <Button variant="danger" onClick={() =>{this.deleteProject(project.id)}}><FaTrash /></Button>
+                        <Button variant="danger" onClick={() =>{this.deleteTodo(todo.id)}}><FaTrash /></Button>
                     </ButtonToolbar>
                 </td>
             </tr>)
@@ -60,13 +60,13 @@ class AllProjects extends React.Component {
                         <tr>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Start date</th>
+                            <th>Project Name</th>
                             <th>Created Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {projects}
+                        {todos}
                     </tbody>
                 </Table>
             </div>
@@ -74,4 +74,4 @@ class AllProjects extends React.Component {
     }
 }
 
-export default AllProjects
+export default AllTodos
