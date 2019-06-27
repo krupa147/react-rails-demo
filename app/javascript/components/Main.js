@@ -11,16 +11,8 @@ export default class Main extends React.Component {
     return(
       <div>
         <ErrorHandler>
-          <Row>
-            <Col lg={2}>
-              <Sidebar />
-            </Col>
-            <Col lg={10}>
-              <Header />
-              <Body />
-            </Col>
-          </Row>
-          </ErrorHandler>
+          <Sidebar />
+        </ErrorHandler>
       </div>
     );
   }
