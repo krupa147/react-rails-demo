@@ -1,21 +1,30 @@
 import React from 'react'
-import Table from 'react-bootstrap/Table'
-import {Button, ButtonToolbar} from 'react-bootstrap'
-import { FaTrash, FaPencilAlt } from "react-icons/fa/";
+import {Button} from 'react-bootstrap'
 import API from './api'
+import CreateProject from './CreateProject';
+import ProjectList from './ProjectList';
 
 
 class AllProjects extends React.Component {
     constructor(props){
         super(props);
-        this.state = { projects: [], loading: false, error: null };
+        this.state = { projects: [], loading: false, error: null, showNewProjectForm: false };
         this.refreshProjects = this.refreshProjects.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
+        this._onButtonClick = this._onButtonClick.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     componentDidMount(){
         this.refreshProjects();
     }
+    _onButtonClick() {
+        console.log("in button click");
+        let button_state = this.state.showNewProjectForm ? false : true
+        this.setState({
+            showNewProjectForm: button_state,
+        });
+      }
 
     refreshProjects(){
         console.log("In refresh project");
@@ -31,6 +40,15 @@ class AllProjects extends React.Component {
             .then(() => { this.refreshProjects() })
     }
 
+    handleFormSubmit(event) {
+        event.preventDefault();
+        let data = { project: { name: event.target.name.value, description: event.target.description.value, start_date: event.target.start_date.value } }
+        console.log(data);
+        API.post('api/v1/projects', data)
+        .then(() => { this.refreshProjects() })
+        this.setState({showNewProjectForm: false})
+      }
+
     render(){
         if(this.state.error){
             return <p>{error.message}</p>;
@@ -39,36 +57,11 @@ class AllProjects extends React.Component {
         if(this.state.loading){
             return <p>loading...</p>;
         }
-        var projects = this.state.projects.map((project) => {
-            return(<tr key={project.id}>
-                <td>{project.name}</td>
-                <td>{project.description}</td>
-                <td>{project.start_date}</td>
-                <td>{project.created_at}</td>
-                <td>
-                    <ButtonToolbar>
-                        <Button variant="info"><FaPencilAlt /></Button>
-                        <Button variant="danger" onClick={() =>{this.deleteProject(project.id)}}><FaTrash /></Button>
-                    </ButtonToolbar>
-                </td>
-            </tr>)
-        });
+        
         return(
             <div>
-                <Table responsive="lg" variant="dark" striped="true">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Start date</th>
-                            <th>Created Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {projects}
-                    </tbody>
-                </Table>
+                <Button variant="info" onClick={this._onButtonClick}>{ this.state.showNewProjectForm ? "Show All Projects" : "Create Project"}</Button>
+                { this.state.showNewProjectForm ? <CreateProject handleFormSubmit={this.handleFormSubmit}/> : <ProjectList projects={this.state.projects} onDelete={this.deleteProject} /> }
             </div>
         );
     }
