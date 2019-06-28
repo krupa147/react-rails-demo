@@ -48,6 +48,11 @@ class AllProjects extends React.Component {
         .then(() => { this.refreshProjects() })
         this.setState({showNewProjectForm: false})
       }
+      
+      updateProject(project){
+          API.update(`api/v1/projects/${project.id}`, data)
+            .then(() => { this.refreshProjects() })
+      }
 
     render(){
         if(this.state.error){
