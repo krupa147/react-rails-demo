@@ -6,6 +6,8 @@ import {Row, Col} from 'react-bootstrap'
 import AllProjects from "./_all_projects.js";
 import AllTodos from "./AllTodos.js";
 import Header from './Header.js.jsx';
+import EditProjectForm from './EditProjectForm.js.jsx';
+import ShowProject from './ShowProject.js';
 
 
 class Sidebar extends React.Component{
@@ -31,8 +33,10 @@ class Sidebar extends React.Component{
                   <Header />
                   <Switch>
                     <Route exact path='/' component={AllProjects}/>
-                    <Route path='/projects' component={AllProjects}/>
+                    <Route exact path='/projects' component={AllProjects}/>
                     <Route path='/todos' component={AllTodos}/>
+                    <Route path='/edit/:id' component={EditProjectForm} />
+                    <Route path='/projects/:id' component={ShowProject} />
                   </Switch>
               </Col>
               </BrowserRouter>

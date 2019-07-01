@@ -2,7 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import Table from 'react-bootstrap/Table'
 import {Button, ButtonToolbar} from 'react-bootstrap'
-import { FaTrash, FaPencilAlt } from "react-icons/fa/";
+import { FaTrash, FaPencilAlt, FaEye } from "react-icons/fa/"
+import { Link } from 'react-router-dom'
 
 
 class ProjectList extends React.Component {
@@ -15,8 +16,9 @@ class ProjectList extends React.Component {
           <td>{project.created_at}</td>
           <td>
               <ButtonToolbar>
-                  <Button variant="info"><FaPencilAlt /></Button>
+                  <Link to={"/edit/"+project.id} className="btn btn-primary"><FaPencilAlt /></Link>
                   <Button variant="danger" onClick={() =>{this.props.onDelete(project.id)}}><FaTrash /></Button>
+                  <Link to={"/projects/"+project.id} className="btn btn-success"><FaEye /></Link>
               </ButtonToolbar>
           </td>
       </tr>)

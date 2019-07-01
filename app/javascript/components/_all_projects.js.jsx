@@ -49,7 +49,7 @@ class AllProjects extends React.Component {
         this.setState({showNewProjectForm: false})
       }
       
-      updateProject(project){
+    updateProject(project){
           API.update(`api/v1/projects/${project.id}`, data)
             .then(() => { this.refreshProjects() })
       }
@@ -66,7 +66,7 @@ class AllProjects extends React.Component {
         return(
             <div>
                 <Button variant="info" onClick={this._onButtonClick}>{ this.state.showNewProjectForm ? "Show All Projects" : "Create Project"}</Button>
-                { this.state.showNewProjectForm ? <CreateProject handleFormSubmit={this.handleFormSubmit}/> : <ProjectList projects={this.state.projects} onDelete={this.deleteProject} /> }
+                { this.state.showNewProjectForm ? <CreateProject handleFormSubmit={this.handleFormSubmit}/> : <ProjectList projects={this.state.projects} onDelete={this.deleteProject}/> }
             </div>
         );
     }
