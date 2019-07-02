@@ -3,12 +3,13 @@ import {Button} from 'react-bootstrap'
 import API from './api'
 import CreateProject from './CreateProject';
 import ProjectList from './ProjectList';
+import {Link} from 'react-router-dom'
 
 
 class AllProjects extends React.Component {
     constructor(props){
         super(props);
-        this.state = { projects: [], loading: false, error: null, showNewProjectForm: false };
+        this.state = { projects: [], loading: false, error: null };
         this.refreshProjects = this.refreshProjects.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
         this._onButtonClick = this._onButtonClick.bind(this);
@@ -65,8 +66,8 @@ class AllProjects extends React.Component {
         
         return(
             <div>
-                <Button variant="info" onClick={this._onButtonClick}>{ this.state.showNewProjectForm ? "Show All Projects" : "Create Project"}</Button>
-                { this.state.showNewProjectForm ? <CreateProject handleFormSubmit={this.handleFormSubmit}/> : <ProjectList projects={this.state.projects} onDelete={this.deleteProject}/> }
+                <Link to={"/projects/new"} className="btn btn-primary">New Project</Link>
+                <ProjectList projects={this.state.projects} onDelete={this.deleteProject}/>
             </div>
         );
     }

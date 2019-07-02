@@ -12,8 +12,8 @@ class ProjectList extends React.Component {
       return(<tr key={project.id}>
           <td>{project.name}</td>
           <td>{project.description}</td>
-          <td>{project.start_date}</td>
-          <td>{project.created_at}</td>
+          <td>{new Date(project.start_date).toDateString()}</td>
+          <td>{new Date(project.created_at).toDateString()}</td>
           <td>
               <ButtonToolbar>
                   <Link to={"/edit/"+project.id} className="btn btn-primary"><FaPencilAlt /></Link>

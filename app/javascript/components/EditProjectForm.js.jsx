@@ -9,9 +9,10 @@ import API from './api'
 class EditProjectForm extends React.Component {
   constructor(props){
     super(props);
-    this.state = { project: { name: '', description: '', start_date: ''} };
+    this.state = { project: { name: '', description: '', start_date: new Date()} };
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onDateChange = this.onDateChange.bind(this)
   }
 
   componentDidMount() {
@@ -28,20 +29,29 @@ class EditProjectForm extends React.Component {
 
 
   handleChange = ({ target }) => {
+    console.log(target);
     const project = this.state.project;
     const currentState = project;
     const { name, value } = target;
     currentState[name] = value;
     this.setState({ project: currentState });
- };
+  }
 
- onSubmit(event) {
-  const project = this.state.project;
-  API.patch('api/v1/projects/'+this.props.match.params.id, project)
-      .then(res => console.log(res.data));
-  
-  this.props.history.push('/projects');
-}
+  onDateChange(value){
+    const project = this.state.project;
+    const currentState = project;
+    currentState['start_date'] = value;
+    this.setState({ project: currentState });
+    console.log(this.state.project.start_date);
+  }
+
+  onSubmit(event) {
+    const project = this.state.project;
+    API.patch('api/v1/projects/'+this.props.match.params.id, project)
+        .then(res => console.log(res.data));
+    
+    this.props.history.push('/projects');
+  }
 
   render () {
     return (
@@ -60,7 +70,7 @@ class EditProjectForm extends React.Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Start date</Form.Label>
-              <DatePicker name="start_date" value={this.state.project.start_date} onChange={this.handleChange}/>
+              <DatePicker name="start_date" selected={new Date(this.state.project.start_date)} onChange={this.onDateChange}/>
             </Form.Group>
             <Button variant="primary" type="submit">
               Update
