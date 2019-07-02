@@ -2,8 +2,10 @@ class Api::V1::ProjectsController < ApplicationController
   before_action :set_project, only: %i[show update destroy]
 
   def index
+    projects = paginate(Project.all, pagination_params)
+    # projects = Project.all
     projects = ActiveModel::Serializer::CollectionSerializer
-      .new(Project.all,
+      .new(projects,
            each_serializer: ProjectSerializer)
     success(data: projects, message: I18n.t("projects.list"))
   end

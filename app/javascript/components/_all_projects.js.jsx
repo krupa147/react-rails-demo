@@ -1,37 +1,30 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
 import API from './api'
-import CreateProject from './CreateProject';
 import ProjectList from './ProjectList';
 import {Link} from 'react-router-dom'
-
+import Pagination from './Pagination.js'
+import NavLink from 'react-bootstrap/NavLink';
+import PaginationComponent from './PaginationComponent';
 
 class AllProjects extends React.Component {
     constructor(props){
         super(props);
-        this.state = { projects: [], loading: false, error: null };
+        this.state = { projects: [], loading: false, error: null, totalProjects: null, currentPage: 1 };
         this.refreshProjects = this.refreshProjects.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
-        this._onButtonClick = this._onButtonClick.bind(this);
-        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
     }
 
     componentDidMount(){
         this.refreshProjects();
     }
-    _onButtonClick() {
-        console.log("in button click");
-        let button_state = this.state.showNewProjectForm ? false : true
-        this.setState({
-            showNewProjectForm: button_state,
-        });
-      }
 
-    refreshProjects(){
+    refreshProjects(page = 1){
         console.log("In refresh project");
         this.setState({loading: true});
-        API.get('api/v1/projects')
-            .then((response) => { this.setState({loading: false, projects: response.data.data}) })
+        console.log(this.state);
+        API.get(`api/v1/projects?page=${page}`)
+            .then((response) => { this.setState({loading: false, projects: response.data.data, totalProjects: response.headers['x-total']}) })
             .catch(error => { this.setState({loading: false, error: error}) } )
     }
 
@@ -41,33 +34,24 @@ class AllProjects extends React.Component {
             .then(() => { this.refreshProjects() })
     }
 
-    handleFormSubmit(event) {
-        event.preventDefault();
-        let data = { project: { name: event.target.name.value, description: event.target.description.value, start_date: event.target.start_date.value } }
-        console.log(data);
-        API.post('api/v1/projects', data)
-        .then(() => { this.refreshProjects() })
-        this.setState({showNewProjectForm: false})
-      }
+    onChangePage(page){
+        this.setState({currentPage: page})
+        this.refreshProjects(page);
+    }
       
-    updateProject(project){
-          API.update(`api/v1/projects/${project.id}`, data)
-            .then(() => { this.refreshProjects() })
-      }
-
     render(){
+        console.log(this.state)
         if(this.state.error){
-            return <p>{error.message}</p>;
+            return <p>{this.state.error}</p>;
         }
-
         if(this.state.loading){
             return <p>loading...</p>;
         }
-        
         return(
             <div>
                 <Link to={"/projects/new"} className="btn btn-primary">New Project</Link>
                 <ProjectList projects={this.state.projects} onDelete={this.deleteProject}/>
+                <PaginationComponent totalItems={this.state.totalProjects} onChange={this.onChangePage} currentPage={this.state.currentPage} />
             </div>
         );
     }
