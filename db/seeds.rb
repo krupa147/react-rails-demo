@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-(100..150).each do |i|
+(1..150).each do |i|
   project = Project.create(name: "Project#{i}", description: "Description for project#{i}")
   (1...2).each do |j|
     project.todos.create!(name: "Proj#{i}_ToDo#{j}", description: "Description for todo#{j} of project#{i}")
