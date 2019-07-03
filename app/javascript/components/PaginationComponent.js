@@ -17,17 +17,19 @@ class PaginationComponent extends React.Component {
             endPage = totalPages;
         } else {
             // more than 10 total pages so calculate start and end pages
-            if (currentPage <= 6) {
+            if (this.props.currentPage <= 6) {
                 startPage = 1;
                 endPage = 10;
-            } else if (currentPage + 4 >= totalPages) {
+            } else if (this.props.currentPage + 4 >= totalPages) {
                 startPage = totalPages - 9;
                 endPage = totalPages;
             } else {
-                startPage = currentPage - 5;
-                endPage = currentPage + 4;
+                startPage = this.props.currentPage - 5;
+                endPage = this.props.currentPage + 4;
             }
         }
+        console.log(endPage);
+        console.log(startPage);
         var pages = [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
         return pages;
     }
@@ -43,6 +45,7 @@ class PaginationComponent extends React.Component {
         }
 
         let pages = this.countPages()
+        var totalPages = Math.ceil(this.props.totalItems / this.state.pageSize);
         
         return (
             <ul className="pagination">
@@ -57,11 +60,11 @@ class PaginationComponent extends React.Component {
                         <a onClick={() => this.setPage(page)}>{page}</a>
                     </li>
                 )}
-                <li className={this.props.currentPage === this.props.totalPages ? 'disabled' : ''}>
+                <li className={this.props.currentPage === totalPages ? 'disabled' : ''}>
                     <a onClick={() => this.setPage(this.props.currentPage + 1)}>Next</a>
                 </li>
-                <li className={this.props.currentPage === this.props.totalPages ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(this.props.totalPages)}>Last</a>
+                <li className={this.props.currentPage === totalPages ? 'disabled' : ''}>
+                    <a onClick={() => this.setPage(totalPages)}>Last</a>
                 </li>
             </ul>
         );
