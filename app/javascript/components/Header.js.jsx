@@ -1,16 +1,22 @@
 import React from 'react'
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 class Header extends React.Component{
     render(){
       return(
         <div>
-            <Navbar bg="light" variant="light" fixed="top" className="bg-light justify-content-between">
-              <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-primary">Search</Button>
-              </Form>
-            </Navbar>
+            <nav className="navbar navbar-default navbar-static-top">
+              <div className="container">
+                <div id="navbar-collapse" className="collapse navbar-collapse">
+                  <ul className="nav navbar-nav">
+                    <li><Link to="/">Home</Link></li>
+                  </ul>
+                  <ul className="nav navbar-nav navbar-right">
+                  </ul>
+                </div>
+              </div>
+            </nav>
           </div>
       );
     }
