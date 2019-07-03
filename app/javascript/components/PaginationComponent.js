@@ -1,5 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
+
+
 class PaginationComponent extends React.Component {
   constructor(props) {
         super(props);
@@ -28,8 +30,6 @@ class PaginationComponent extends React.Component {
                 endPage = this.props.currentPage + 4;
             }
         }
-        console.log(endPage);
-        console.log(startPage);
         var pages = [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
         return pages;
     }
@@ -50,10 +50,10 @@ class PaginationComponent extends React.Component {
         return (
             <ul className="pagination">
                 <li className={this.props.currentPage === 1 ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(1)}>First</a>
+                    <a onClick={this.props.currentPage === 1 ? ()=>{return false} : () => this.setPage(1)}>First</a>
                 </li>
                 <li className={this.props.currentPage === 1 ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(this.props.currentPage - 1)}>Previous</a>
+                    <a onClick={this.props.currentPage === 1 ? ()=>{return false} : () => this.setPage(this.props.currentPage - 1)}>Previous</a>
                 </li>
                 {pages.map((page, index) =>
                     <li key={index} className={this.props.currentPage === page ? 'active' : ''}>
@@ -61,10 +61,10 @@ class PaginationComponent extends React.Component {
                     </li>
                 )}
                 <li className={this.props.currentPage === totalPages ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(this.props.currentPage + 1)}>Next</a>
+                    <a onClick={this.props.currentPage === totalPages ? ()=>{return false} : () => this.setPage(this.props.currentPage + 1)}>Next</a>
                 </li>
                 <li className={this.props.currentPage === totalPages ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(totalPages)}>Last</a>
+                    <a onClick={this.props.currentPage === totalPages ? ()=>{return false} : () => this.setPage(totalPages)}>Last</a>
                 </li>
             </ul>
         );
