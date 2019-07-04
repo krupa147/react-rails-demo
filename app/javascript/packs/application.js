@@ -18,9 +18,10 @@
 console.log('Hello World from Webpacker')
     // Support component names relative to this directory:
 const componentRequireContext = require.context("components", true);
+console.log(componentRequireContext);
 const ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext); // Support component names relative to this directory:
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap-theme.css';
 
