@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Container, Form, Button } from 'react-bootstrap'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 import API from './api'
 
 
@@ -68,10 +68,10 @@ class EditProjectForm extends React.Component {
               <Form.Label>Description</Form.Label>
               <Form.Control name="description" as="textarea" rows="3" value={this.state.project.description} onChange={this.handleChange} />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
               <Form.Label>Start date</Form.Label>
               <DatePicker name="start_date" selected={new Date(this.state.project.start_date)} onChange={this.onDateChange}/>
-            </Form.Group>
+            </Form.Group> */}
             <Button variant="primary" type="submit">
               Update
             </Button>

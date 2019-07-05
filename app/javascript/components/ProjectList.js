@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Table from 'react-bootstrap/Table'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import {Button, ButtonToolbar} from 'react-bootstrap'
 import { FaTrash, FaPencilAlt, FaEye } from "react-icons/fa/"
 import { Link } from 'react-router-dom'
@@ -25,7 +25,7 @@ class ProjectList extends React.Component {
   });
     return (
       <React.Fragment>
-        <Table responsive="lg" variant="dark" striped="true">
+        <BootstrapTable responsive="lg" variant="dark" striped="true">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -38,7 +38,7 @@ class ProjectList extends React.Component {
                     <tbody>
                         {projects}
                     </tbody>
-                </Table>
+                </BootstrapTable>
       </React.Fragment>
     );
   }
