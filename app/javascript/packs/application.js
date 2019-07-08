@@ -22,6 +22,5 @@ console.log(componentRequireContext);
 const ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext); // Support component names relative to this directory:
 
-
 // import 'bootstrap/dist/css/bootstrap-theme.css';
 
