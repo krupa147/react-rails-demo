@@ -4,6 +4,7 @@ import { Container, Form, Button } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import API from './api'
+import ProjectForm from "./ProjectForm";
 
 
 class EditProjectForm extends React.Component {
@@ -16,15 +17,15 @@ class EditProjectForm extends React.Component {
   }
 
   componentDidMount() {
-    API.get('api/v1/projects/'+this.props.match.params.id)
-        .then(response => {
-            this.setState({ 
-              project: response.data.data,
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+    // API.get('api/v1/projects/'+this.props.match.params.id)
+    //     .then(response => {
+    //         this.setState({ 
+    //           project: response.data.data,
+    //         });
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error);
+    //     })
   }
 
 
@@ -58,7 +59,7 @@ class EditProjectForm extends React.Component {
       <React.Fragment>
          <Container>
           <h2>Project</h2>
-          <Form onSubmit={this.onSubmit}>
+          {/* <Form onSubmit={this.onSubmit}>
             <Form.Group>
               <Form.Label>Name</Form.Label>
               <Form.Control name="name" type="text" value={this.state.project.name} onChange={this.handleChange} />
@@ -75,7 +76,8 @@ class EditProjectForm extends React.Component {
             <Button variant="primary" type="submit">
               Update
             </Button>
-          </Form>
+          </Form> */}
+          <ProjectForm id={this.props.match.params.id}/>
           </Container>
       </React.Fragment>
     );

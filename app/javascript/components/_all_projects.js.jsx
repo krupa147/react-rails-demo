@@ -45,7 +45,7 @@ class AllProjects extends React.Component {
         }
         return(
             <div>
-                <Link to={"/projects/new"} className="btn btn-primary">New Project</Link>
+                <Link to={"/projects/create"} className="btn btn-primary">New Project</Link>
                 <ProjectList projects={this.state.projects} onDelete={this.deleteProject}/>
                 <PaginationComponent totalItems={this.state.totalProjects} onChange={this.onChangePage} currentPage={this.state.currentPage} />
             </div>

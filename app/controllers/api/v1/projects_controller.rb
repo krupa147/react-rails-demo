@@ -2,7 +2,7 @@ class Api::V1::ProjectsController < ApplicationController
   before_action :set_project, only: %i[show update destroy]
 
   def index
-    projects = paginate(Project.all, pagination_params)
+    projects = paginate(Project.includes(:todos).order(created_at: :desc), pagination_params)
     # projects = Project.all
     projects = ActiveModel::Serializer::CollectionSerializer
       .new(projects,
@@ -20,7 +20,9 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def update
-    @project.update(project_params)
+    @project.update(project_update_params)
+    puts @project
+    puts ProjectSerializer.new(@project)
     success(data: ProjectSerializer.new(@project), message: I18n.t("projects.updated"))
   end
 
@@ -36,6 +38,10 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, :start_date)
+    params.require(:project).permit(:name, :description, :start_date, todos_attributes: %i[name description _destroy])
+  end
+
+  def project_update_params
+    params.require(:project).permit(:name, :description, :start_date, todos_attributes: %i[id name description _destroy])
   end
 end
