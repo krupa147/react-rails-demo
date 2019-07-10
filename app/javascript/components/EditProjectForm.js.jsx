@@ -77,7 +77,7 @@ class EditProjectForm extends React.Component {
               Update
             </Button>
           </Form> */}
-          <ProjectForm id={this.props.match.params.id}/>
+          <ProjectForm id={this.props.match.params.id} history={this.props.history}/>
           </Container>
       </React.Fragment>
     );

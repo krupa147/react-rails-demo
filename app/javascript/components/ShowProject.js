@@ -6,7 +6,7 @@ class ShowProject extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { project: { name: '', description: '', start_date: ''} };
+    this.state = { project: { name: '', description: '', start_date: '', todos_attributes: []} };
   }
 
   componentDidMount() {
@@ -21,14 +21,32 @@ class ShowProject extends React.Component {
         })
   }
   render () {
+    let todos = this.state.project.todos_attributes.map((todo, index) => {
+      let todoDOM = (
+        <div key={index} >
+          <Table responsive="lg" variant="dark" striped="true">
+            <thead>Todo {index+1}</thead>
+            <tbody>
+              <tr><td>Name</td><td>{todo.name}</td></tr>
+              <tr><td>Description</td><td>{todo.description}</td></tr>
+            </tbody>
+          </Table>
+        </div>
+      );
+      return todoDOM;
+    });
     return (
       <React.Fragment>
-        <Table>
-          <tr><td>Name</td><td>{this.state.project.name}</td></tr>
-          <tr><td>Description</td><td>{this.state.project.description}</td></tr>
-          <tr><td>Start Date</td><td>{this.state.project.start_date}</td></tr>
-          <tr><td>Created At</td><td>{this.state.project.created_at}</td></tr>
+        <Table responsive="lg" variant="dark" striped="true">
+          <tbody>
+            <thead>Project {this.state.project.name}</thead>
+            <tr><td>Name</td><td>{this.state.project.name}</td></tr>
+            <tr><td>Description</td><td>{this.state.project.description}</td></tr>
+            <tr><td>Start Date</td><td>{this.state.project.start_date}</td></tr>
+            <tr><td>Created At</td><td>{this.state.project.created_at}</td></tr>
+          </tbody>
         </Table>
+        {todos}
       </React.Fragment>
     );
   }

@@ -4,6 +4,7 @@ import { Container, Form, Button } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import API from './api'
+import LoadingSpinner from './LoadingSpinner'
 
 class ProjectForm extends React.Component {
   constructor(props){
@@ -15,7 +16,8 @@ class ProjectForm extends React.Component {
         description: '',
         start_date: new Date(),
         todos_attributes: [{ ...this.emptyTodo }]
-      }
+      },
+      is_loading: false
     }
     this.onDateChange = this.onDateChange.bind(this);
     this.onTodoChange = this.onTodoChange.bind(this);
@@ -28,10 +30,12 @@ class ProjectForm extends React.Component {
 
   componentDidMount(){
     if(this.props.id){
+      this.setState({is_loading: true})
       API.get('api/v1/projects/'+this.props.id)
         .then(response => {
             this.setState({ 
               project: response.data.data,
+              is_loading: false
             });
             console.log(response.data)
         })
@@ -43,16 +47,18 @@ class ProjectForm extends React.Component {
   }
 
   onSubmit() {
+    this.setState({is_loading: true});
+    console.log("before submit");
     const project = this.state.project;
     if(this.state.project.id){
       API.patch('api/v1/projects/'+this.state.project.id, project)
-        .then(res => console.log(res));
+        .then((response) => {this.setState({is_loading: false}), this.props.history.push('/projects')});
     }else{
       API.post('api/v1/projects', project)
-      .then((response) => { console.log(response) })
+      .then((response) => {this.setState({is_loading: false}), this.props.history.push('/projects')})
     }
-    console.log(this.props.history)
-    this.props.history.push('/projects');
+    console.log("sfgahjkasgdsas");
+    // this.props.history.push('/projects');
   }
 
   onTodoAdd(){
@@ -121,8 +127,9 @@ class ProjectForm extends React.Component {
   }
 
   render () {
-    console.log("below is the history props");
-    console.log(this.props.history);
+    if(this.state.is_loading === true){
+      return <LoadingSpinner />;
+    }
     return (
       <React.Fragment>
         <Container>
@@ -160,3 +167,4 @@ class ProjectForm extends React.Component {
 }
 
 export default ProjectForm
+
