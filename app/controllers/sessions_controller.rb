@@ -1,19 +1,19 @@
-class SessionsController < Devise::SessionsController
-  respond_to :json
-
+class SessionsController < ApplicationController
+  
   def create
-    self.resource = warden.authenticate!(auth_options)
-    set_flash_message!(:notice, :signed_in)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    respond_with resource, location: after_sign_in_path_for(resource)
+    user = User.find_by_email(login_params[:email])
+    if user && user.authenticate(login_params[:password])
+      token = JsonWebToken.encode(email: user.email)
+      user.update(token: token)
+      success(data: UserSerializer.new(user), message: I18n.t("session.created"))
+    else
+      render json: { error: 'unauthorized' }, status: :not_found
+    end
   end
 
   private
-  def respond_with(resource, _opts = {})
-    render json: resource
-  end
-  def respond_to_on_destroy
-    head :ok
+
+  def login_params
+    params.permit(:email, :password)
   end
 end

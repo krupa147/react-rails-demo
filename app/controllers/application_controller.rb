@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Rails::Pagination
+  include Authenticator
 
   def render_resource(resource)
     if resource.errors.empty?

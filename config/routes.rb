@@ -3,23 +3,15 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root "home#index"
-  devise_for :users,
-           path: '',
-           path_names: {
-             sign_in: 'login',
-             sign_out: 'logout',
-             registration: 'signup'
-           },
-           controllers: {
-             sessions: 'sessions',
-             registrations: 'registrations'
-           },
-           defaults: { format: :json }
 
+  post 'login' => 'sessions#create'
+  post 'register' => 'registrations#create'
+  
   namespace :api do
     namespace :v1 do
       resources :projects, except: %i[new edit]
       resources :todos, except: %i[new edit]
+      get 'profile' => 'users#profile'
     end
   end
 end
