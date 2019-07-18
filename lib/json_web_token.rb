@@ -6,8 +6,8 @@ class JsonWebToken
       end
    
       def decode(token)
-        payload_hash = JWT.decode(token, Rails.application.secrets.secret_key_base)
-        HashWithIndifferentAccess.new payload_hash
+        payload_hash = JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
+        payload_hash = HashWithIndifferentAccess.new payload_hash
         payload_hash[:email]
       rescue
         nil

@@ -1,5 +1,7 @@
 module Authenticator
   extend ActiveSupport::Concern
+
+  attr_accessor :current_user
   
   def authenticate_request
     @current_user = current_loggedin_user
@@ -11,7 +13,6 @@ module Authenticator
 
   def http_token
     token = request.headers['Authorization']
-    token = token.last if token
     token
   end
 

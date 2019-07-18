@@ -35,6 +35,10 @@ en:
 
   session:
     created: "User logged in successfully"
+
+  users:
+    created: "User created successfully"
+    found: "User found"
   
   projects:
     list: "Project list found"

@@ -1,30 +1,42 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
-class Login extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = { user: {email: '', password: ''}}
+import { Container, Form, Button } from 'react-bootstrap'
+import { useAuth} from '../_service/AuthService.js'
+
+function Login(){
+  const { login } = useAuth();
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+
+  function handleSubmit(){
+    console.log("in handle submit")
+    console.log(email)
+    console.log(password)
+    login(email, password)
   }
-  render () {
-    return (
-      <React.Fragment>
+
+  return(
+         <React.Fragment>
         <Container>
-        <h2>Project</h2>
-        <Form onSubmit={this.onSubmit}>
+        <h2>Login</h2>
+        <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>email</Form.Label>
-            <Form.Control name="name" type="text" value={this.state.user.email} onChange={this.handleChange} />
+            <Form.Label>Email</Form.Label>
+            <Form.Control name="email" type="text" value={email} onChange={e => setEmail(e.target.value)} />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>email</Form.Label>
-            <Form.Control name="name" type="text" value={this.state.user.email} onChange={this.handleChange} />
+            <Form.Label>Password</Form.Label>
+            <Form.Control name="password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
           </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
           </Form>
           </Container>
       </React.Fragment>
-    );
-  }
+  );
+
 }
 
 export default Login
