@@ -1,10 +1,9 @@
 import React from 'react'
 import {AuthProvider} from './AuthService.js'
 
-function AppProviders({children}) {
+function AppProviders() {
   return (
-    <AuthProvider>
-    </AuthProvider>
+    <AuthProvider />
   )
 }
 

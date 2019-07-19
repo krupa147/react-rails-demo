@@ -38,7 +38,7 @@ function AuthProvider(props){
         }
     }
 
-    const login = (email, password) => AuthClient.login(email, password).then(reload)
+    const login = (email, password) => { AuthClient.login(email, password).then(reload) }
     const register = form => AuthClient.register(form).then(reload)
     const logout= () => AuthClient.logout.then(reload)
 

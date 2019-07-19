@@ -1,18 +1,17 @@
-import React, { useState } from "react"
-import PropTypes from "prop-types"
+import React, { useState, useForceUpdate } from "react"
 import { Container, Form, Button } from 'react-bootstrap'
-import { useAuth} from '../_service/AuthService.js'
+import { login} from '../utils/auth_utils'
+import {useReactRouter } from 'react-router-dom'
+const { history, location, match } = useReactRouter();
 
-function Login(){
-  const { login } = useAuth();
+function Login(props){
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
-  function handleSubmit(){
-    console.log("in handle submit")
-    console.log(email)
-    console.log(password)
-    login(email, password)
+  function handleSubmit(event){
+    console.log(props);
+    event.preventDefault();
+    login(email, password).then(history.push("/"))
   }
 
   return(

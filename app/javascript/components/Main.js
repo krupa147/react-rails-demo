@@ -2,15 +2,21 @@ import React from "react"
 import Sidebar from "./Sidebar.js";
 import useUser from '../_service/AuthService.js'
 import Login from "./Login.js"
-import AppProviders from '../_service'
+import {AuthProvider} from '../_service/AuthService.js'
+import {BrowserRouter, Switch} from 'react-router-dom'
 
 
-function Main() {
+function Main(props) {
   const loggedInUser = useUser;
+  console.log(props);
   return(
-    <AppProviders>
-      {loggedInUser ? <Sidebar /> : <Login />}
-    </AppProviders>
+    <AuthProvider>
+      <BrowserRouter>
+      <Switch>
+        {loggedInUser ? <Sidebar /> : <Login props={props}/>}
+        </Switch>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
