@@ -2,8 +2,9 @@ import React from 'react'
 import API from './api'
 import ProjectList from './ProjectList';
 import {Link} from 'react-router-dom'
-import NavLink from 'react-bootstrap/NavLink';
 import PaginationComponent from './PaginationComponent';
+import LoadingSpinner from './LoadingSpinner'
+
 
 class AllProjects extends React.Component {
     constructor(props){
@@ -27,6 +28,7 @@ class AllProjects extends React.Component {
     }
 
     deleteProject(id){
+        this.setState({loading: true })
         API.delete(`api/v1/projects/${id}`)
             .then(() => { this.refreshProjects() })
     }
@@ -40,15 +42,17 @@ class AllProjects extends React.Component {
         if(this.state.error){
             return <p>{this.state.error}</p>;
         }
-        if(this.state.loading){
-            return <p>loading...</p>;
-        }
+        if(this.state.is_loading === true){
+            return <LoadingSpinner />;
+          }
         return(
+        <React.Fragment>
             <div>
                 <Link to={"/projects/create"} className="btn btn-primary">New Project</Link>
                 <ProjectList projects={this.state.projects} onDelete={this.deleteProject}/>
                 <PaginationComponent totalItems={this.state.totalProjects} onChange={this.onChangePage} currentPage={this.state.currentPage} />
             </div>
+        </React.Fragment>
         );
     }
 }

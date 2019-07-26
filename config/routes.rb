@@ -14,4 +14,6 @@ Rails.application.routes.draw do
       get 'profile' => 'users#profile'
     end
   end
+
+  match '*path', to: "error_pages#handle_404", via: [:get, :post]
 end

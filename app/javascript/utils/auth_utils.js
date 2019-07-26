@@ -8,6 +8,7 @@ function getUser(){
 }
 
 function getToken() {
+    console.log(window.localStorage.getItem(token_key))
     return window.localStorage.getItem(token_key)
 }
 

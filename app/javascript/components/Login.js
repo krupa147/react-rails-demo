@@ -1,22 +1,19 @@
 import React, { useState, useForceUpdate } from "react"
 import { Container, Form, Button } from 'react-bootstrap'
 import { login} from '../utils/auth_utils'
-import {useReactRouter } from 'react-router-dom'
-const { history, location, match } = useReactRouter();
-
+import { withRouter } from 'react-router-dom';
 function Login(props){
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
   function handleSubmit(event){
-    console.log(props);
     event.preventDefault();
-    login(email, password).then(history.push("/"))
+    login(email, password).then((response) => { props.history.push('/projects') } );
   }
 
   return(
-         <React.Fragment>
-        <Container>
+        <React.Fragment>
+        <div>
         <h2>Login</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
@@ -32,10 +29,10 @@ function Login(props){
             Submit
           </Button>
           </Form>
-          </Container>
+          </ div>
       </React.Fragment>
   );
 
 }
 
-export default Login
+export default withRouter(Login);
